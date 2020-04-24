@@ -1,0 +1,47 @@
+<div class="main-container">
+    <!-- <mat-card style="width: 50%; max-width: 50%;">
+        <mat-card-header>
+            <mat-card-title>
+                List of Viruses
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <p>Para 1</p>
+            <p>Para 2</p>
+        </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button (click)="login()" color="primary">Login</button>
+      </mat-card-actions>
+    </mat-card> -->
+
+    <div style="display: flex; justify-content: center;">
+        <h2>Returned {{ viruses.length }} results</h2>
+    </div>
+
+    <ng-container *ngFor="let virus of viruses">
+        <ng-container *ngFor="let discovery of virus.discoveries">
+            <div class="container" style="width: 40%; max-width: 40%;">
+
+                <div class="discovery-details-container container">
+                    <h3>{{ virus.species_name }}</h3>
+                    <div class="row container">
+                        <p><span class="field-label">Country: </span> {{ discovery.country }} </p>
+                        <p><span class="field-label">Period of Discovery: </span> <br> {{ discovery.date_found }} </p>
+                    </div>
+
+                    <div class="row container">
+                        <p><span class="field-label">Author: </span> {{ discovery.citation.author }} </p>
+                        <p><span class="field-label">Year of Publication: </span> {{ discovery.citation.pub_year }} </p>
+                    </div>
+                </div>
+
+                <!-- <br>
+                <mat-divider></mat-divider> -->
+
+            </div>
+        </ng-container>
+    </ng-container>
+
+</div>
+
+{{ viruses | json }}

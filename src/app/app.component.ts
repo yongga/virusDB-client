@@ -7,4 +7,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'VirusDB';
+
+  username;
+  password;
+  showSpinner = true;
+
+  login() : boolean {
+    return true;
+  }
 }
