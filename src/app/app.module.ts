@@ -24,12 +24,15 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxPaginationModule } from 'ngx-pagination'
 
 // ** Custom Modules **
 import { NavComponent } from './nav/nav.component';
 import { VirusComponent } from './virus/virus.component';
 import { AddVirusComponent } from './virus/add-virus/add-virus.component';
 import { VirusListComponent } from './virus/virus-list/virus-list.component';
+import { SearchVirusPipe } from './pipes/searchVirusPipe';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +40,9 @@ import { VirusListComponent } from './virus/virus-list/virus-list.component';
     NavComponent,
     VirusComponent,
     AddVirusComponent,
-    VirusListComponent, 
+    VirusListComponent,
+    SearchVirusPipe,
+    SearchComponent, 
   ],
   imports: [
     BrowserModule,
@@ -61,6 +66,7 @@ import { VirusListComponent } from './virus/virus-list/virus-list.component';
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
+    NgxPaginationModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

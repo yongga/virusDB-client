@@ -11,6 +11,7 @@ const routes: Routes = [
   // { path: '', component: AppComponent },
   { path: 'add-virus', component: AddVirusComponent },
   { path: 'viruses', component: VirusListComponent },
+  { path: '', redirectTo: '/viruses', pathMatch: 'full' },
 ];
 
 @NgModule({

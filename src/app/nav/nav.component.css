@@ -21,3 +21,15 @@
     position: fixed;
     top: 0;
 }
+
+.navlink:hover {
+    color: #28a745;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.active-navlink {
+    color: #28a745;
+    cursor: pointer;
+    text-decoration: none;
+}

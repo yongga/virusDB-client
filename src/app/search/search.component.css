@@ -1,0 +1,11 @@
+.expand-search {
+    width: 200px;
+    transition: width 0.35s ease-out;
+    color: #8f8f8f;
+}
+
+.expand-search:focus {
+  width: 300px;
+  transition: width 0.5s ease-in;
+  color: #000;
+}

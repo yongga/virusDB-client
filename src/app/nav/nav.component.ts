@@ -1,4 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, RouteConfigLoadEnd } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+enum TabOptions {
+  HOME = 'Home',
+  VIRUSES = 'Viruses',
+  ADD_VIRUS = 'Add Virus',
+}
 
 @Component({
   selector: 'app-nav',
@@ -6,19 +15,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
+  
+  tabs: TabOptions;
 
-  tabs: string[] = [];
+  activeTab:TabOptions = TabOptions.HOME;
 
-  activeTab: string = this.tabs[0];
-
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit(): void {
-
-  }
-
-  set currentTab(tab: string) {
-    this.activeTab = tab;
+    
   }
 
 }
