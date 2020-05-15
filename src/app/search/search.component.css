@@ -1,3 +1,7 @@
+.search-btn {
+  color: #FFF;
+}
+
 .expand-search {
     width: 200px;
     transition: width 0.35s ease-out;
