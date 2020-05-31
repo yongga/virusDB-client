@@ -1,21 +1,43 @@
 legend + * {
-    -webkit-margin-top-collapse: separate;
-    margin-top: 10px;
-  }
+  -webkit-margin-top-collapse: separate;
+  margin-top: 10px;
+}
 
-  fieldset {
-    display: block;
-    margin-inline-start: 2px;
-    margin-inline-end: 2px;
-    padding-block-start: 0.35em;
-    padding-inline-start: 0.75em;
-    padding-inline-end: 0.75em;
-    padding-block-end: 0.625em;
-    min-inline-size: min-content;
-    border-width: 2px;
-    border-style: groove;
-    border-color: threedface;
-    border-image: initial;
+.entryBox {
+  /* border: 1px solid black; */
+}
+
+.entryBox .removeBtn {
+  color: grey;
+  /* box-shadow: none; */
+  padding: 0px;
+  min-width: 0px;
+  line-height: 0px;
+}
+
+.entryBox .removeBtn:hover {
+  background-color: red;
+  color: #FFF;
+}
+
+.entryBox > .actionsBox {
+  display: flex;
+  justify-content: flex-end;
+}
+
+fieldset {
+  display: block;
+  margin-inline-start: 2px;
+  margin-inline-end: 2px;
+  padding-block-start: 0.35em;
+  padding-inline-start: 0.75em;
+  padding-inline-end: 0.75em;
+  padding-block-end: 0.625em;
+  min-inline-size: min-content;
+  border-width: 2px;
+  border-style: groove;
+  border-color: threedface;
+  border-image: initial;
 }
 
 .mat-form-field--inline {

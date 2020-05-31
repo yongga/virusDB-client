@@ -6,15 +6,15 @@
     <!-- <div class="main-container" *ngIf="viruses"> -->
 
     <div class="main-container" *ngIf="filteredViruses">
-        <div style="display: flex; justify-content: center;">
+        <div style="display: flex; justify-content: center; font-size: 3vw;">
             <h2>Returned {{ filteredViruses.length }} results</h2>
         </div>
 
-        <ng-container *ngFor="let virus of filteredViruses | paginate: { itemsPerPage: 5, currentPage: p }">
-            <div class="container" style="width: 100%;">
-
-                <div class="discovery-details-container container">
-                    <h3>{{ virus.species_name }}</h3>
+        <ng-container *ngFor="let virus of filteredViruses | paginate: { itemsPerPage: filteredViruses.length, currentPage: p }">
+            <div class="container" style="width: 100%; min-width: 400px;">
+                <div class="discovery-details-container container" style="padding: 20px;">
+                    <h3><a routerLink='/edit-virus/{{ virus._id }}'>{{ virus.species_name }}</a></h3>
+                    <hr>
                     <div class="row container">
                         <p><span class="field-label">Country: </span> {{ virus.discovery.country }} </p>
                         <p><span class="field-label">Period of Discovery: </span> <br>
@@ -23,12 +23,11 @@
                     </div>
 
                     <div class="row container">
-                        <p><span class="field-label">Author: </span> {{ virus.discovery.citation.author }} </p>
+                        <p><span class="field-label">Author(s): </span> {{ virus.discovery.citation.author }} </p>
                         <p><span class="field-label">Year of Publication: </span>
                             {{ virus.discovery.citation.pub_year }} </p>
                     </div>
                 </div>
-
             </div>
         </ng-container>
 
@@ -40,7 +39,3 @@
     </div>
     <!-- </div> -->
 </div>
-
-
-
-<!-- {{ viruses | json }} -->

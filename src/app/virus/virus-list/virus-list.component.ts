@@ -4,6 +4,7 @@ import { VirusesService } from 'src/app/services/viruses.service';
 import { Virus } from '../../virus';
 import { SearchService } from '../../services/search.service';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-virus-list',
@@ -20,78 +21,12 @@ export class VirusListComponent implements OnInit {
   constructor(
     private virusService: VirusesService,
     private searchService: SearchService,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
-    //this.loadViruses();
-    this.viruses = [{
-        "_id": "5ea001d0b2c0b43bb8c2ffa5",
-        "discoveries": [{
-          "_id": "5ea001d0b2c0b43bb8c2ffa6",
-          "country": "Singapore",
-          "date_found": "1900BC",
-          "citation": {
-              "author": "WY, Goh",
-              "pub_year": "1860"
-          }
-      }, {
-          "_id": "5ea001d0b2c0b43bb8c2ffa7",
-          "country": "USA",
-          "date_found": "1860AC",
-          "citation": {
-              "author": "JY, Lee",
-              "pub_year": "1900"
-          }
-      }],
-        "species_name": "Angrophorm1",
-    },
-    {
-      "_id": "5ea001d0b2c0b43bb8c2ffa5",
-      "discoveries": [{
-        "_id": "5ea001d0b2c0b43bb8c2ffa6",
-        "country": "Singapore",
-        "date_found": "1900BC",
-        "citation": {
-            "author": "WY, Goh",
-            "pub_year": "1860"
-        }
-    }, {
-        "_id": "5ea001d0b2c0b43bb8c2ffa7",
-        "country": "USA",
-        "date_found": "1860AC",
-        "citation": {
-            "author": "JY, Lee",
-            "pub_year": "1900"
-        }
-    }],
-      "species_name": "Angrophorm5",
-  },
-  {
-    "_id": "5ea001d0b2c0b43bb8c2ffa5",
-    "discoveries": [{
-      "_id": "5ea001d0b2c0b43bb8c2ffa6",
-      "country": "Singapore",
-      "date_found": "1900BC",
-      "citation": {
-          "author": "WY, Goh",
-          "pub_year": "1860"
-      }
-  }, {
-      "_id": "5ea001d0b2c0b43bb8c2ffa7",
-      "country": "USA",
-      "date_found": "1860AC",
-      "citation": {
-          "author": "JY, Lee",
-          "pub_year": "1900"
-      }
-  }],
-    "species_name": "Angrophorm3",
-}];
-
-    this.viruses = this.transformList(this.viruses);
-    this.filteredViruses = this.viruses;
-    
-    console.log(this.viruses);
+    // pre-fetch data
+    this.loadViruses();
 
     this.searchService.searchText.pipe(
       debounceTime(300),
@@ -100,33 +35,40 @@ export class VirusListComponent implements OnInit {
     .subscribe((searchText) => {
       if (searchText != null)
         this.searchViruses(searchText);
+      else 
+        this.loadViruses();
     })
   }
 
   loadViruses() {
-    this.virusService.getViruses().subscribe(resp => {
-      if (resp.success == true) {
-        this.viruses = resp.data;
-        this.viruses = this.transformList(this.viruses);
-        this.filteredViruses = this.viruses;
-      }
-    });
+    this.route.data
+        .subscribe((data: { viruses: any }) => {
+          this.viruses = data.viruses;
+          this.filteredViruses = data.viruses;
+        });
   }
 
   searchViruses(searchText: string) {
-    console.log("Search term = ", searchText);
-    
+    searchText = searchText.length >= 2 ? searchText.charAt(0).toUpperCase() + searchText.slice(1) : searchText.charAt(0).toUpperCase();
+
     if (!searchText)
       this.filteredViruses = this.viruses; 
   
     else {
-      this.filteredViruses = this.viruses.filter(x => {
-        // console.log(x.species_name);
-        // console.log(x.species_name.includes(searchText));
-        return x.species_name.includes(searchText);
+      // this.filteredViruses = this.viruses.filter(x => {
+      //   return x.species_name.includes(searchText);
+      // });
+      this.virusService.searchVirus(searchText).subscribe(resp => {
+        if (resp['success'] == true) {
+          let viruses = resp['data'];
+          viruses = this.transformList(viruses);
+          this.filteredViruses = viruses;
+        } else {
+          this.filteredViruses = [];
+        }
       });
     }
-    console.log(this.viruses);
+    //console.log(this.filteredViruses);
   }
 
   // countResults(): number {
@@ -142,12 +84,12 @@ export class VirusListComponent implements OnInit {
 
   transformList(viruses:any[]): any {
     let tmp_list = [];
-
     viruses.map(virus => {
+      let id = virus._id;
       let species_name = virus.species_name;
-      virus.discoveries.map(
-        x => {
+      virus.discoveries.map(x => {
           const virus = {
+            "_id": id,
             "species_name": species_name,
             "discovery": {
               "country": x.country,
@@ -162,7 +104,6 @@ export class VirusListComponent implements OnInit {
         }
       );
     });
-
     return tmp_list;
   }
 

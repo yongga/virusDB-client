@@ -23,7 +23,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination'
 
 // ** Custom Modules **
@@ -33,6 +33,9 @@ import { AddVirusComponent } from './virus/add-virus/add-virus.component';
 import { VirusListComponent } from './virus/virus-list/virus-list.component';
 import { SearchVirusPipe } from './pipes/searchVirusPipe';
 import { SearchComponent } from './search/search.component';
+import { CustomInterceptor } from './custom-interceptor';
+import { VirusCmFormComponent } from './virus/virus-cm-form/virus-cm-form.component';
+import { EditVirusComponent } from './virus/edit-virus/edit-virus.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +45,9 @@ import { SearchComponent } from './search/search.component';
     AddVirusComponent,
     VirusListComponent,
     SearchVirusPipe,
-    SearchComponent, 
+    SearchComponent,
+    VirusCmFormComponent,
+    EditVirusComponent, 
   ],
   imports: [
     BrowserModule,
@@ -68,7 +73,9 @@ import { SearchComponent } from './search/search.component';
     AppRoutingModule,
     NgxPaginationModule,
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: CustomInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
