@@ -4,7 +4,8 @@ import { VirusesService } from 'src/app/services/viruses.service';
 import { Virus } from '../../virus';
 import { SearchService } from '../../services/search.service';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DialogService } from 'src/app/services/dialog-service';
 
 @Component({
   selector: 'app-virus-list',
@@ -21,22 +22,27 @@ export class VirusListComponent implements OnInit {
   constructor(
     private virusService: VirusesService,
     private searchService: SearchService,
+    private dialogService: DialogService,
     private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
-    // pre-fetch data
-    this.loadViruses();
+    // pre-fetched data in API resolver
+
+    // Clear search bar text on page load
+    this.searchService.changeMessage("");
 
     this.searchService.searchText.pipe(
       debounceTime(300),
       distinctUntilChanged(),
     )
     .subscribe((searchText) => {
-      if (searchText != null)
+      if (searchText != null && searchText != "") {
         this.searchViruses(searchText);
-      else 
+      }
+      else {
         this.loadViruses();
+      }
     })
   }
 
@@ -45,6 +51,7 @@ export class VirusListComponent implements OnInit {
         .subscribe((data: { viruses: any }) => {
           this.viruses = data.viruses;
           this.filteredViruses = data.viruses;
+          this.dialogService.close();
         });
   }
 
@@ -55,12 +62,16 @@ export class VirusListComponent implements OnInit {
       this.filteredViruses = this.viruses; 
   
     else {
-      // this.filteredViruses = this.viruses.filter(x => {
-      //   return x.species_name.includes(searchText);
-      // });
       this.virusService.searchVirus(searchText).subscribe(resp => {
         if (resp['success'] == true) {
-          let viruses = resp['data'];
+          let viruses = [];
+          viruses = resp['data'];
+
+          // Client-side manual search
+          viruses = viruses.filter(virus => {
+            return (virus.species_name.toLowerCase().indexOf(`${searchText.toLowerCase()}`) > -1);
+          });
+
           viruses = this.transformList(viruses);
           this.filteredViruses = viruses;
         } else {
@@ -68,19 +79,7 @@ export class VirusListComponent implements OnInit {
         }
       });
     }
-    //console.log(this.filteredViruses);
   }
-
-  // countResults(): number {
-  //   let count: number = 0;
-    
-  //   // total: the accumulator for the count in each loop
-  //   count = this.filteredViruses.reduce((total, virus) => {
-  //     return total += virus.discoveries.length;
-  //   }, 0);
-
-  //   return count;
-  // }
 
   transformList(viruses:any[]): any {
     let tmp_list = [];

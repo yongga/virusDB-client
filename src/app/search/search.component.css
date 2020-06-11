@@ -3,13 +3,13 @@
 }
 
 .expand-search {
-    width: 200px;
+    width: 70%;
     transition: width 0.35s ease-out;
     color: #8f8f8f;
 }
 
 .expand-search:focus {
-  width: 300px;
+  width: 100%;
   transition: width 0.5s ease-in;
   color: #000;
 }

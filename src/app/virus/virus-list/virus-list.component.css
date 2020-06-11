@@ -1,18 +1,28 @@
-.discovery-details-container {
-    background-color: #f8f8f8; 
-    border: 1px solid grey; 
-    border-radius: 10px; 
-    margin-top: 20px;
+.main-container #results-length {
+    margin-top: 20px; 
+    color: #a1a1cc;
 }
 
-.row {
-    width: auto; 
-    display: flex; 
-    justify-content:space-between; 
-    flex-direction: row; 
-    /* border: 1px solid black; */
+@media(max-width: 720px) {
+    .row {
+        width: auto; 
+        display: flex;
+        justify-content: space-between; 
+        flex-direction: column;
+        padding: 0 15px;
+    }
+}
+
+@media(min-width: 721px) {
+    .row {
+        width: auto; 
+        display: flex;
+        justify-content: space-between; 
+        flex-direction: row;
+        padding: 0 15px;
+    }
 }
 
 .row .field-label {
-    color: blue;
+    color: #4A0BD4;
 }

@@ -1,41 +1,51 @@
-<div class="content-container">
-    <div class="container" style="padding-top: 20px;">
-        <h1>Viruses</h1>
-    </div>
+<div class="main-container">
 
-    <!-- <div class="main-container" *ngIf="viruses"> -->
+    <ng-container *ngIf="filteredViruses;">
+        <h2 id="results-length">Returned {{ filteredViruses.length }} results</h2>
 
-    <div class="main-container" *ngIf="filteredViruses">
-        <div style="display: flex; justify-content: center; font-size: 3vw;">
-            <h2>Returned {{ filteredViruses.length }} results</h2>
-        </div>
+        <ng-container
+            *ngFor="let virus of filteredViruses | paginate: { itemsPerPage: filteredViruses.length, currentPage: p }">
 
-        <ng-container *ngFor="let virus of filteredViruses | paginate: { itemsPerPage: filteredViruses.length, currentPage: p }">
-            <div class="container" style="width: 100%; min-width: 400px;">
-                <div class="discovery-details-container container" style="padding: 20px;">
-                    <h3><a routerLink='/edit-virus/{{ virus._id }}'>{{ virus.species_name }}</a></h3>
-                    <hr>
-                    <div class="row container">
+            <mat-card style="width: 40%; min-width: 200px;">
+                <mat-card-title>
+                    <h2>
+                        <a style="color: #3808A1;" routerLink='/edit-virus/{{ virus._id }}'>{{ virus.species_name }}</a>
+                    </h2>
+                </mat-card-title>
+                <hr>
+                <mat-card-content>
+                    <div class="row">
                         <p><span class="field-label">Country: </span> {{ virus.discovery.country }} </p>
                         <p><span class="field-label">Period of Discovery: </span> <br>
                             {{ virus.discovery.date_found }}
                         </p>
                     </div>
-
-                    <div class="row container">
+                    
+                    <div class="row">
                         <p><span class="field-label">Author(s): </span> {{ virus.discovery.citation.author }} </p>
                         <p><span class="field-label">Year of Publication: </span>
                             {{ virus.discovery.citation.pub_year }} </p>
                     </div>
-                </div>
-            </div>
+                </mat-card-content>
+            </mat-card>
+
+            <br>
+
         </ng-container>
 
-        <br>
-
-        <div style="display: flex;">
+        <div style="margin-left: -80px;">
             <pagination-controls (pageChange)="p = $event"></pagination-controls>
         </div>
-    </div>
-    <!-- </div> -->
+    </ng-container>
+
+    <!-- Loader component -->
+    <!-- <ng-template #loadingViruses>
+        <div *ngIf="filteredViruses == undefined" class="loader-backdrop">
+            <div class="loader-body">
+                <mat-spinner></mat-spinner>
+                <p>Shhhh... Plundering data from the server</p>
+            </div>
+        </div>
+    </ng-template> -->
+
 </div>

@@ -1,14 +1,8 @@
-<div class="content-container">
-  <div class="container" style="padding-top: 20px;">
-    <h1>Add a Virus</h1>
-  </div>
-</div>
+<div class="main-container">
 
-<div class="container" style="display: flex; justify-content: center; width: 100%; margin-top: 20px; width: 100%;">
-
-  <mat-card style="width: 80%;">
+  <mat-card style="width: 80%; min-width: 420px;">
     <mat-card-header>
-      <mat-card-title>Virus</mat-card-title>
+      <mat-card-title>Virus Details</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <app-virus-cm-form (onSubmit)="addVirus($event)" (onCancel)="cancel()"></app-virus-cm-form>
@@ -16,41 +10,3 @@
   </mat-card>
   
 </div>
-
-
-<!-- Temporary solution to place all fields within fieldset tag-->
-<!-- <div>
-              <fieldset style="width: auto;">
-                <legend>
-                  <span style="font-size: medium;">Citation {{ i }}</span>
-                </legend>
-                <div class="mat-form-field--inline">
-                  <mat-form-field appearance="standard" style="width: 20vw;">
-                    <mat-label>Country found</mat-label>
-                    <input formControlName="country" matInput placeholder="Enter country of discovery here">
-                  </mat-form-field>
-                  <mat-form-field appearance="standard" style="width: 20vw;">
-                    <mat-label>Date found</mat-label>
-                    <input formControlName="date_found" matInput placeholder="Enter date period of discovery here">
-                  </mat-form-field>
-                </div>
-
-                <div formGroupName="citation" style="margin-top: 20px;">
-                  <fieldset style="width: auto;">
-                    <legend>
-                      <span style="font-size: medium;">Citation {{ i }}</span>
-                    </legend>
-    
-                    <mat-form-field appearance="standard" style="width: 100%;">
-                      <mat-label>Author names</mat-label>
-                      <input formControlName="author" matInput placeholder="Enter names of authors here">
-                    </mat-form-field>
-    
-                    <mat-form-field appearance="standard" style="width: 20vw;">
-                      <mat-label>Year of Publication</mat-label>
-                      <input formControlName="pub_year" matInput placeholder="Enter year of publication here">
-                    </mat-form-field>
-                  </fieldset>
-                </div>
-              </fieldset>
-            </div> -->

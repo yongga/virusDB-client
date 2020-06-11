@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { VirusesService } from 'src/app/services/viruses.service';
 import { pipe } from 'rxjs';
 import { Router } from '@angular/router';
+import { DialogService } from 'src/app/services/dialog-service';
+import { MatDialogRef } from '@angular/material/dialog';
+import { DialogComponent } from 'src/app/dialog/dialog/dialog.component';
 
 @Component({
   selector: 'app-add-virus',
@@ -12,24 +15,38 @@ import { Router } from '@angular/router';
 export class AddVirusComponent {
 
   constructor(
-    private formBuilder: FormBuilder,
     private virusService: VirusesService,
     private router: Router,
-  ) { }
+    private dialogService: DialogService,
+  ) {}
 
   cancel() {
-    this.router.navigateByUrl("/viruses");
+    this.router.navigateByUrl('/viruses');
   }
 
   addVirus(data) {
+
+    // Get ref of saving dialog 
+    // use it later to display one dialog at a time
+    let ref = this.dialogService.displaySaveDialog();
+
     this.virusService.addVirus(data).subscribe(
       resp => {
-        if (resp['success'] == true)
-          console.log(`Response = `, resp);
-        this.router.navigateByUrl('/');
+        if (resp['success'] == true) {
+          setTimeout(() => { 
+            ref.close();
+            this.router.navigateByUrl('/');
+          }, 100);
+        }
+        else {
+          ref.afterClosed().subscribe(() => {
+            this.dialogService.displayErrorDialog();
+          });
+          ref.close();
+        }
+        
       }
     );
-    //console.log(`Insert data`, data);
   }
 
 }

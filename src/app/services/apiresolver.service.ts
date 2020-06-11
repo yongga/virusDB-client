@@ -1,11 +1,9 @@
-import { Injectable, Component, OnInit, Input } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, of, EMPTY } from 'rxjs';
 import { mergeMap, take, switchMap } from 'rxjs/operators';
 import { VirusesService } from 'src/app/services/viruses.service';
-import { Virus } from '../virus';
-import { SearchService } from '../services/search.service';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { DialogService } from './dialog-service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +12,11 @@ export class APIResolverService implements Resolve<any> {
 
   constructor(
     private virusService: VirusesService,
-    private router: Router, // to manipulate post-retrieval routing
+    private router: Router, // to manipulate post-retrieval routing,
+    private dialogService: DialogService,
   ) { }
+
+  ref:any;
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
     // handle display of species details
@@ -27,6 +28,7 @@ export class APIResolverService implements Resolve<any> {
     }
     // landing page
     else {
+      this.ref = this.dialogService.displayRetrievingData();
       return this.loadViruses();
     }
   }
@@ -39,6 +41,7 @@ export class APIResolverService implements Resolve<any> {
           viruses = this.transformList(viruses);
           return of(viruses);
         } else {
+          this.ref.close();
           return EMPTY;
         }
       })

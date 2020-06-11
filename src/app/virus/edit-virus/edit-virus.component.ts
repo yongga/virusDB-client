@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { VirusesService } from 'src/app/services/viruses.service';
 import { pipe } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DialogService } from 'src/app/services/dialog-service';
 
 @Component({
   selector: 'app-edit-virus',
@@ -17,6 +18,7 @@ export class EditVirusComponent implements OnInit {
     private virusService: VirusesService,
     private route: ActivatedRoute,
     private router: Router,
+    private dialogService: DialogService,
   ) { }
 
   ngOnInit() {
@@ -31,14 +33,26 @@ export class EditVirusComponent implements OnInit {
 
   // Update the species record
   updateVirus(data) {
+    // Get ref of saving dialog 
+    // use it later to display one dialog at a time
+    let ref = this.dialogService.displaySaveDialog();
+
     this.virusService.updateVirus(data).subscribe(
       resp => {
-        if (resp['success'] == true)
-          console.log(`Response = `, resp);
-        this.router.navigateByUrl('/');
+        if (resp['success'] == true) {
+          setTimeout(() => { 
+            ref.close();
+            this.router.navigateByUrl('/');
+          }, 100);
+        }
+        else {
+          ref.afterClosed().subscribe(() => {
+            this.dialogService.displayErrorDialog();
+          });
+          ref.close();
+        }
       }
     );
-    //console.log(`Update data`, data);
   }
 
 }

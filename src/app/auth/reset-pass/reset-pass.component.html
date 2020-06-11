@@ -1,0 +1,15 @@
+<div class="main-container">
+  <mat-card style="margin-top: 100px; width: 25%; min-width: 200px;">
+    <mat-card-content>
+      <form #resetForm="ngForm" (ngSubmit)="resetPass(resetForm)" style="display: flex; flex-direction: column;">
+        <mat-form-field>
+          <mat-label>Email Address</mat-label>
+          <input matInput type="email" ngModel #email="ngModel" name="email" placeholder="Email address"/>
+        </mat-form-field>
+        <div style="display: flex; justify-content: space-between; flex-direction: row-reverse; margin-top: 10px;">
+          <button mat-raised-button type="submit" color="primary" style="width: auto; padding: 0 10px;">Reset Password</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

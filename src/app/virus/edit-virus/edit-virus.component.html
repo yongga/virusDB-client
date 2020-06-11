@@ -1,14 +1,8 @@
-<div class="content-container">
-  <div class="container" style="padding-top: 20px;">
-    <h1>Edit a Virus</h1>
-  </div>
-</div>
+<div class="main-container">
 
-<div class="container" style="display: flex; justify-content: center; width: 100%; margin-top: 20px; width: 100%;">
-
-  <mat-card style="width: 80%;">
+  <mat-card style="width: 80%; min-width: 420px;">
     <mat-card-header>
-      <mat-card-title>Virus</mat-card-title>
+      <mat-card-title>Virus Details</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <app-virus-cm-form [formData]="entryData" (onSubmit)="updateVirus($event)" (onCancel)="cancel()"></app-virus-cm-form>
@@ -16,7 +10,6 @@
   </mat-card>
   
 </div>
-
 
 
 

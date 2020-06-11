@@ -1,0 +1,32 @@
+
+<div style="display: flex; justify-content: center; align-items: center; flex-direction: column;" mat-dialog-content 
+    *ngIf="data['type'] == null; else dialogWithActions">
+    
+    <ng-container *ngIf="data['title'] != null">
+        <h3>{{ data['title'] }}</h3>
+    </ng-container>
+
+    <ng-container *ngIf="data['msg'] != null; else displayError">
+        <mat-spinner></mat-spinner>
+        <p *ngIf="data['msg'] != null">{{ data['msg'] }}</p>
+    </ng-container>
+    
+    <ng-template #displayError>
+        <p style="color: red;" *ngIf="data['err'] != null">{{ data['err'] }} 
+            <mat-icon aria-hidden="false" aria-label="Example home icon">error</mat-icon>
+        </p>
+    </ng-template>
+</div>
+
+<ng-template #dialogWithActions>
+    <div mat-dialog-title>
+        <p>{{ data['title'] }}</p>
+    </div>
+    <mat-dialog-content>
+        <p>{{ data['msg'] }}</p>
+    </mat-dialog-content>
+    <mat-dialog-actions align="center">
+        <button mat-button mat-dialog-close (click)="close()">Cancel</button>
+        <button mat-button [mat-dialog-close]="true" (click)="leavePage()" cdkFocusInitial >Leave</button>
+      </mat-dialog-actions>
+</ng-template>

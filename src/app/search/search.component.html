@@ -1,10 +1,4 @@
-<!-- <mat-form-field appearance="standard" style="height: auto; width: auto;">
-    <input [(ngModel)]="searchText" (input)="search()" matInput placeholder="Enter search keywords here">
-    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-</mat-form-field> -->
-
-<form class="form-inline my-2 my-lg-0">
+<form class="form-inline my-2 my-sm-0">
     <input class="form-control mr-sm-2 expand-search" type="search" placeholder="Search" aria-label="Search"
     name="search" [(ngModel)]="searchText" (input)="search()">
-    <button class="btn btn-outline-success my-2 my-sm-0 search-btn" type="submit">Search</button>
 </form>

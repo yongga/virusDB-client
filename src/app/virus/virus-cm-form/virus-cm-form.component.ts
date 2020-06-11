@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { VirusesService } from '../../services/viruses.service';
+import { DialogService } from 'src/app/services/dialog-service';
 
 @Component({
   selector: 'app-virus-cm-form',
@@ -19,7 +20,7 @@ export class VirusCmFormComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private virusService: VirusesService,
+    private dialogService: DialogService
   ) { }
 
   ngOnInit() {
@@ -43,6 +44,7 @@ export class VirusCmFormComponent implements OnInit {
         'entries': discoveries,
       });
     }
+
   }
 
   // Create this nested form group whenever a new discovery is added
@@ -73,7 +75,15 @@ export class VirusCmFormComponent implements OnInit {
 
   // Emit a cancel event
   cancel() {
-    this.onCancel.emit();
+    // Only show confirmation dialog if form has been touched
+    if (this.formGroup.dirty === true) {
+      this.dialogService.displayLeavePageDialog();
+      this.dialogService.onExit.subscribe((evt: DialogService) => {
+        this.onCancel.emit();
+      });
+    }
+    else 
+      this.onCancel.emit();
   }
 
   // Emit a submit event

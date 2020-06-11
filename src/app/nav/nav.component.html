@@ -1,59 +1,94 @@
-<div class="fixed-navmenu">
-  <mat-toolbar color="primary">
-    <mat-toolbar-row>
+<mat-sidenav-container class="sidenav-container">
 
-      <button mat-icon-button>
-        <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
-      </button>
-
-      <a mat-button [routerLink]="'/'" class="navlink" routerLinkActive="active-navlink" [routerLinkActiveOptions]="{exact: true}">
-        <h1 class="page-header">VirusDB</h1>
-      </a>
-
-      <span class="menu-spacer"></span>
-
-      <div>
-        <a mat-button [routerLink]="'/viruses'" class="navlink" routerLinkActive="active-navlink" [routerLinkActiveOptions]="{exact: true}">
-          Viruses 
+  <!-- Mobile drawer view -->
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'">
+    <mat-toolbar>
+      <!-- <span>VirusDB</span> -->
+      <span>
+        <a class="app-icon" [routerLink]="'/'">
+          <img src="/assets/public/img/virusDB_logo_new3.png" alt="app_logo" width="57" height="57">
         </a>
-      </div>
-
+      </span>
       <span class="menu-spacer"></span>
-
+      <mat-icon class="menu-close-btn" (click)="drawer.toggle()" aria-hidden="false" aria-label="Close icon">close</mat-icon>
+    </mat-toolbar>
+    <mat-nav-list>
       <app-search></app-search>
+      <a mat-list-item [routerLink]="'/'" (click)="drawer.toggle()" class="navlink" routerLinkActive="active-navlink"
+          [routerLinkActiveOptions]="{exact: true}"> Home </a>
+        <a mat-list-item [routerLink]="'/viruses'" (click)="drawer.toggle()" class="navlink" routerLinkActive="active-navlink"
+          [routerLinkActiveOptions]="{exact: true}"> Viruses </a>
+        <a mat-list-item [routerLink]="'/add-virus'" (click)="drawer.toggle()" class="navlink" routerLinkActive="active-navlink"
+          [routerLinkActiveOptions]="{exact: true}"> Add virus </a>
+    </mat-nav-list>
+  </mat-sidenav>
 
-      <span class="menu-spacer" style="flex: 1 1 auto;"></span>
+  <!-- Navbar view -->
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
 
-      <a mat-button style="background-color: #28a745; text-decoration: none;" [routerLink]="'/add-virus'">Add Virus</a>
+      <mat-toolbar-row [ngStyle]="{'justify-content': (isHandset$ | async) ? 'space-between' : 'start-flex'}">
+        <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
 
-    </mat-toolbar-row>
-  </mat-toolbar>
+        <!-- start of new navbar layout for desktop view -->
+        <ng-container *ngIf="(isHandset$ | async) === false; else displayMobileView">
+          <!-- div to group items together for better layout organization-->
+          <div>
+            <a class="app-icon" [routerLink]="'/'">
+              <img src="/assets/public/img/virusDB_logo_new3.png" alt="app_logo" width="57" height="57">
+            </a>
+            <a mat-button [routerLink]="'/viruses'" class="navlink" routerLinkActive="active-navlink"
+              [routerLinkActiveOptions]="{exact: true}">
+              Viruses
+            </a>
+          </div>
+          <!-- end of desktop nav layout -->
+          <app-search></app-search>
+          <span class="menu-spacer"></span>
+          <div class="menu-actions">
+            <a mat-button [routerLink]="'/add-virus'">Add Virus</a>
+          </div>
+        </ng-container>
 
-  <!-- Side nav -->
-  <mat-sidenav-container>
-    <mat-sidenav #sidenav style="width: 20vw; min-width: 100px;">
-      <mat-nav-list>
+        <!-- start of new navbar layout for mobile view -->
+        <ng-template #displayMobileView>
+          <!-- div to group items together for better layout organization-->
+          <div>
+            <a class="app-icon" [routerLink]="'/'">
+              <img src="/assets/public/img/virusDB_logo_new3.png" alt="app_logo" width="57" height="57">
+            </a>
+          </div>
+        </ng-template>
+        <!-- end of mobile nav layout -->
 
-        <a mat-list-item [routerLink]="'/'" class="navlink" routerLinkActive="active-navlink" [routerLinkActiveOptions]="{exact: true}"> Home </a>
-        <a mat-list-item [routerLink]="'/viruses'" class="navlink" routerLinkActive="active-navlink" [routerLinkActiveOptions]="{exact: true}"> Viruses </a>
-        <a mat-list-item (click)="sidenav.toggle()" mat-list-item>Close</a>
+        <a mat-button *ngIf="auth.user | async as user; else showLogin" style="background-color: red;
+          margin-left: 10px;" [routerLink]="['./']" (click)="logout()">Logout</a>
+        <ng-template #showLogin>
+          <a [routerLink]="['/login']" mat-button style="background-color: #fd0e5e; text-decoration: none; 
+            margin-left: 10px;">Login</a>
+        </ng-template>
 
-      </mat-nav-list>
-    </mat-sidenav>
-    #06F
-    #009
-    <mat-sidenav-content style="background-color: #f0f0f0; height: 90vh;">
+      </mat-toolbar-row>
+        
+      <!-- Page header -->
+      <mat-toolbar-row class="page-header">
+        <span>{{ currentPage }}</span>
+      </mat-toolbar-row>
 
-      <!-- <div class="header-container" style="display: flex; flex-direction: column; align-items: center;">
-        <div class="container" style="display: flex; padding-top: 20px; margin-bottom: 50px;">
-          <h1>{{ activeTab.toString() }}</h1>
-        </div>
-        <router-outlet></router-outlet>
-      </div> -->
-      
-      <router-outlet></router-outlet>
-      
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-</div>
-<!-- <router-outlet></router-outlet> -->
+    </mat-toolbar>
+
+    <!-- This is the placeholder for main content. Add main content here -->
+    <ng-content></ng-content>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

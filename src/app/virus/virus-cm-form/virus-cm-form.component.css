@@ -1,15 +1,9 @@
-legend + * {
-    -webkit-margin-top-collapse: separate;
-    margin-top: 10px;
-}
-
-.entryBox {
-    /* border: 1px solid black; */
+form {
+    padding: 0 20px;
 }
 
 .entryBox .removeBtn {
     color: grey;
-    /* box-shadow: none; */
     padding: 0px;
     min-width: 0px;
     line-height: 0px;
@@ -23,21 +17,6 @@ legend + * {
 .entryBox > .actionsBox {
     display: flex;
     justify-content: flex-end;
-}
-
-fieldset {
-    display: block;
-    margin-inline-start: 2px;
-    margin-inline-end: 2px;
-    padding-block-start: 0.35em;
-    padding-inline-start: 0.75em;
-    padding-inline-end: 0.75em;
-    padding-block-end: 0.625em;
-    min-inline-size: min-content;
-    border-width: 2px;
-    border-style: groove;
-    border-color: threedface;
-    border-image: initial;
 }
 
 .mat-form-field--inline {
@@ -55,3 +34,29 @@ fieldset {
 .mat-form-field--inline .mat-form-field:nth-child(1) {
     margin-right: 50px;
 }
+
+.form-actions {
+    display: flex; 
+    justify-content: space-between; 
+    margin-top: 10px;
+}
+
+/* legend + * {
+    -webkit-margin-top-collapse: separate;
+    margin-top: 10px;
+}
+
+fieldset {
+    display: block;
+    margin-inline-start: 2px;
+    margin-inline-end: 2px;
+    padding-block-start: 0.35em;
+    padding-inline-start: 0.75em;
+    padding-inline-end: 0.75em;
+    padding-block-end: 0.625em;
+    min-inline-size: min-content;
+    border-width: 2px;
+    border-style: groove;
+    border-color: threedface;
+    border-image: initial;
+} */

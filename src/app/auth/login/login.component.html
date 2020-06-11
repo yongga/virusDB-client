@@ -1,0 +1,24 @@
+<div class="main-container">
+  <mat-card style="margin-top: 100px; width: 25%; min-width: 200px;">
+    <mat-card-content>
+      <form #loginForm="ngForm" (ngSubmit)="login(loginForm)" style="display: flex; flex-direction: column;">
+        <mat-form-field>
+          <mat-label>Email Address</mat-label>
+          <input matInput type="email" ngModel #email="ngModel" name="email" placeholder="Email address"/>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input matInput type="password" ngModel #pw="ngModel" name="pw" placeholder="Enter password"/>
+        </mat-form-field>
+        <p style="color: red;" *ngIf="(auth.user | async) === null && loginForm.dirty && 
+          loginForm.touched && loginErr">Invalid Credentials</p>
+        <div style="display: flex; justify-content: space-between; align-items: baseline; flex-direction: row-reverse; margin-top: 10px;">
+          <button mat-raised-button type="submit" color="primary" style="width: auto; padding: 0 10px;">Login</button>
+          <a [routerLink]="['/reset-pass']">Reset Password</a>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- <app-dialog></app-dialog> -->
