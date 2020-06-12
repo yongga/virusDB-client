@@ -1,5 +1,8 @@
 <div class="main-container">
-  <mat-card style="margin-top: 100px; width: 25%; min-width: 200px;">
+  <mat-card style="margin-top: 100px; width: 25%; min-width: 200px; display: flex; flex-direction: column; align-items: center;">
+    <mat-card-title style="margin-bottom: 20px;">
+      <img src="/assets/public/img/virusDB_logo.png" alt="app_logo" style="background-color: #3f51b5; border-radius: 15px;" width="120" height="120">
+    </mat-card-title>
     <mat-card-content>
       <form #loginForm="ngForm" (ngSubmit)="login(loginForm)" style="display: flex; flex-direction: column;">
         <mat-form-field>
@@ -20,5 +23,3 @@
     </mat-card-content>
   </mat-card>
 </div>
-
-<!-- <app-dialog></app-dialog> -->

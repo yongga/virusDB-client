@@ -14,8 +14,8 @@ import {ServerConf} from '../config';
   providedIn: 'root'
 })
 export class VirusesService {
-  //private virusesUrl = `${ServerConf.serverURL}viruses`; // URL to web api for viruses
-  private virusesUrl = `http://localhost:5001/virusdb-b020d/us-central1/api/viruses`;
+  private virusesUrl = `${ServerConf.serverURL}viruses`; // URL to web api for viruses
+  //private virusesUrl = `http://localhost:5001/virusdb-b020d/us-central1/api/viruses`;
 
   constructor(
     private http: HttpClient,

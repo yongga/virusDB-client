@@ -6,6 +6,7 @@
           <mat-label>Email Address</mat-label>
           <input matInput type="email" ngModel #email="ngModel" name="email" placeholder="Email address"/>
         </mat-form-field>
+        <p *ngIf="emailSent">{{ emailSent }}</p>
         <div style="display: flex; justify-content: space-between; flex-direction: row-reverse; margin-top: 10px;">
           <button mat-raised-button type="submit" color="primary" style="width: auto; padding: 0 10px;">Reset Password</button>
         </div>

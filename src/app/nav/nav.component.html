@@ -7,8 +7,8 @@
     <mat-toolbar>
       <!-- <span>VirusDB</span> -->
       <span>
-        <a class="app-icon" [routerLink]="'/'">
-          <img src="/assets/public/img/virusDB_logo_new3.png" alt="app_logo" width="57" height="57">
+        <a (click)="drawer.toggle()" class="app-icon" [routerLink]="'/'">
+          <img src="/assets/public/img/virusDB_logo.png" alt="app_logo" width="57" height="57">
         </a>
       </span>
       <span class="menu-spacer"></span>
@@ -29,7 +29,7 @@
   <mat-sidenav-content>
     <mat-toolbar color="primary">
 
-      <mat-toolbar-row [ngStyle]="{'justify-content': (isHandset$ | async) ? 'space-between' : 'start-flex'}">
+      <mat-toolbar-row [ngStyle]="{'justify-content': (isHandset$ | async) ? 'space-between' : 'flex-start'}">
         <button
         type="button"
         aria-label="Toggle sidenav"
@@ -44,7 +44,7 @@
           <!-- div to group items together for better layout organization-->
           <div>
             <a class="app-icon" [routerLink]="'/'">
-              <img src="/assets/public/img/virusDB_logo_new3.png" alt="app_logo" width="57" height="57">
+              <img src="/assets/public/img/virusDB_logo.png" alt="app_logo" width="57" height="57">
             </a>
             <a mat-button [routerLink]="'/viruses'" class="navlink" routerLinkActive="active-navlink"
               [routerLinkActiveOptions]="{exact: true}">
@@ -55,7 +55,15 @@
           <app-search></app-search>
           <span class="menu-spacer"></span>
           <div class="menu-actions">
-            <a mat-button [routerLink]="'/add-virus'">Add Virus</a>
+            <div>
+              <a mat-button [routerLink]="'/add-virus'">Add Virus</a>
+              <a mat-button *ngIf="(auth.user | async) as user; else showLogin" style="background-color: red;" 
+                [ngStyle]="{'margin-left': (isHandset$ | async) ? '0px' : '10px'}" [routerLink]="['./']" (click)="logout()">Logout</a>
+              <ng-template #showLogin>
+                <a mat-button style="background-color: #fd0e5e; text-decoration: none; word-wrap: break-word;"
+                [ngStyle]="{'margin-left': (isHandset$ | async) ? '0px' : '10px'}" [routerLink]="['/login']">Login</a>
+              </ng-template>
+            </div>
           </div>
         </ng-container>
 
@@ -64,18 +72,17 @@
           <!-- div to group items together for better layout organization-->
           <div>
             <a class="app-icon" [routerLink]="'/'">
-              <img src="/assets/public/img/virusDB_logo_new3.png" alt="app_logo" width="57" height="57">
+              <img src="/assets/public/img/virusDB_logo.png" alt="app_logo" width="57" height="57">
             </a>
           </div>
+          <a mat-button *ngIf="auth.user | async as user; else showLogin" style="background-color: red;" 
+              [ngStyle]="{'margin-left': (isHandset$ | async) ? '0px' : '10px'}" [routerLink]="['./']" (click)="logout()">Logout</a>
+            <ng-template #showLogin>
+              <a mat-button style="background-color: #fd0e5e; text-decoration: none;"
+              [ngStyle]="{'margin-left': (isHandset$ | async) ? '0px' : '10px'}" [routerLink]="['/login']">Login</a>
+            </ng-template>
         </ng-template>
         <!-- end of mobile nav layout -->
-
-        <a mat-button *ngIf="auth.user | async as user; else showLogin" style="background-color: red;
-          margin-left: 10px;" [routerLink]="['./']" (click)="logout()">Logout</a>
-        <ng-template #showLogin>
-          <a [routerLink]="['/login']" mat-button style="background-color: #fd0e5e; text-decoration: none; 
-            margin-left: 10px;">Login</a>
-        </ng-template>
 
       </mat-toolbar-row>
         

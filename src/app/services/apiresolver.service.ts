@@ -42,7 +42,7 @@ export class APIResolverService implements Resolve<any> {
           return of(viruses);
         } else {
           this.ref.close();
-          return EMPTY;
+          return of([]);
         }
       })
     );

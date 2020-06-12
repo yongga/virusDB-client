@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 })
 export class ResetPassComponent implements OnInit {
 
+  emailSent: string = null;
+
   constructor(
     public auth: AngularFireAuth,
     private router: Router
@@ -22,7 +24,8 @@ export class ResetPassComponent implements OnInit {
     if (target_email)
       this.auth.sendPasswordResetEmail(target_email)
           .then(() => {
-            this.router.navigateByUrl('/login');
+            this.emailSent = `The password reset link has been sent to the email address provided.`;
+            setTimeout(() => this.router.navigateByUrl('/login'), 3000);
           })
           .catch((err) => {
             console.error(`${err.message}`);
